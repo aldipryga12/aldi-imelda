@@ -10,7 +10,7 @@ window.WEDDING_CONFIG = {
     groom: {
       shortName: 'Aldi',
       fullName: 'Aldi',
-      parents: 'Nama orang tua akan diinformasikan',
+      parents: 'Putra dari Bapak Gugun & Ibu Marsim',
       instagram: '',
       instagramUrl: '#'
     }
@@ -18,9 +18,9 @@ window.WEDDING_CONFIG = {
   weddingDate: '2028-07-12T08:00:00+07:00',
   displayDate: '12 Juli 2028',
   venue: {
-    name: 'Kemang',
-    city: 'Bogor, Jawa Barat',
-    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Kemang%2C+Bogor%2C+Jawa+Barat'
+    name: 'Kp. Pondok Udik, Ds. Pondok Udik',
+    city: 'Jl. Raya Kemang–Parung, RT.3/RW.2 No.33, Pondok Udik (Gg. Masjid Al-Falah), Kemang, Bogor',
+    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Kp.+Pondok+Udik+Ds.+Pondok+Udik+Jl.+Raya+Kemang+Parung+RT.3+RW.2+No.33+Pondok+Udik+Masjid+Al-Falah+Kemang+Bogor'
   },
   events: {
     ceremony: { title: 'Akad Nikah', time: '08.00 WIB — selesai' },
