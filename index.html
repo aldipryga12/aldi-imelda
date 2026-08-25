@@ -1,91 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Undangan pernikahan Aldi & Imelda — 12 Juli 2028 di Kemang, Bogor." />
-  <title>Aldi & Imelda — 12 Juli 2028</title>
+  <title>Undangan Pernikahan — Aldi & Imelda</title>
+  <meta name="description" content="Undangan pernikahan digital Aldi & Imelda" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="cover" class="cover">
+  <audio id="bgMusic" loop preload="none">
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <section class="cover" id="cover">
+    <div class="cover-overlay"></div>
     <div class="cover-card">
-      <p class="eyebrow">The Wedding Of</p>
+      <p class="eyebrow">The Wedding of</p>
       <h1 data-couple>Aldi & Imelda</h1>
-      <p class="cover-date" data-date-label>12 Juli 2028</p>
+      <p class="date" data-date>12 Juli 2028</p>
       <div class="guest-box">
         <span>Kepada Yth.</span>
         <strong id="guestName">Tamu Undangan</strong>
       </div>
-      <button id="openInvite" class="btn primary">Buka Undangan</button>
+      <button class="btn primary" id="openInvitation">Buka Undangan</button>
     </div>
-  </div>
+  </section>
 
-  <audio id="bgMusic" loop preload="none"></audio>
-  <button id="musicToggle" class="music-toggle" aria-label="Putar atau jeda musik">♫</button>
-
-  <main>
-    <section class="hero section">
+  <main id="mainContent" class="hidden">
+    <header class="hero section">
       <div class="container narrow center">
-        <p class="eyebrow">We Are Getting Married</p>
-        <h1 data-couple>Aldi & Imelda</h1>
-        <p class="lead">Dengan memohon rahmat dan ridho Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan akad pernikahan kami.</p>
-        <div id="countdown" class="countdown">
+        <p class="eyebrow">Save the Date</p>
+        <h2 class="script-title" data-couple>Aldi & Imelda</h2>
+        <p class="lead">Dengan penuh rasa syukur, kami mengundang Anda untuk hadir dan memberikan doa restu di hari bahagia kami.</p>
+        <div class="countdown" id="countdown">
           <div><strong id="days">00</strong><span>Hari</span></div>
           <div><strong id="hours">00</strong><span>Jam</span></div>
           <div><strong id="minutes">00</strong><span>Menit</span></div>
           <div><strong id="seconds">00</strong><span>Detik</span></div>
         </div>
       </div>
-    </section>
+    </header>
 
     <section class="section soft">
-      <div class="container couple-grid">
-        <article class="person-card">
-          <div class="photo-placeholder">A</div>
-          <p class="eyebrow">Mempelai Pria</p>
-          <h2 data-groom>Aldi</h2>
-          <p class="muted" data-groom-parents>Putra dari Bapak ... & Ibu ...</p>
-          <a class="text-link" data-groom-instagram href="#" target="_blank" rel="noopener">Instagram</a>
-        </article>
-        <div class="ampersand">&</div>
-        <article class="person-card">
-          <div class="photo-placeholder">I</div>
-          <p class="eyebrow">Mempelai Wanita</p>
-          <h2 data-bride>Imelda</h2>
-          <p class="muted" data-bride-parents>Putri dari Bapak ... & Ibu ...</p>
-          <a class="text-link" data-bride-instagram href="#" target="_blank" rel="noopener">Instagram</a>
-        </article>
+      <div class="container center">
+        <p class="eyebrow">Mempelai</p>
+        <h2>Dengan bahagia kami memperkenalkan</h2>
+        <div class="couple-grid">
+          <article class="person-card">
+            <div class="avatar" id="brideAvatar">I</div>
+            <h3 id="brideName">Imelda</h3>
+            <p id="brideParents">Nama orang tua akan diinformasikan</p>
+            <a id="brideInstagram" href="#" target="_blank" rel="noopener" aria-label="Instagram mempelai wanita"></a>
+          </article>
+          <div class="ampersand">&</div>
+          <article class="person-card">
+            <div class="avatar" id="groomAvatar">A</div>
+            <h3 id="groomName">Aldi</h3>
+            <p id="groomParents">Nama orang tua akan diinformasikan</p>
+            <a id="groomInstagram" href="#" target="_blank" rel="noopener" aria-label="Instagram mempelai pria"></a>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container narrow center">
-        <p class="eyebrow">Akad Pernikahan</p>
-        <h2 data-date-label>12 Juli 2028</h2>
-        <p class="lead small" data-akad-time>08.00 WIB — selesai</p>
-        <div class="event-card">
-          <h3 data-venue>Kemang, Bogor</h3>
-          <p data-address>Kemang, Kabupaten Bogor, Jawa Barat</p>
-          <a id="mapsBtn" class="btn secondary" href="#" target="_blank" rel="noopener">Buka Google Maps</a>
-          <button id="calendarBtn" class="btn ghost" type="button">Tambah ke Kalender</button>
+      <div class="container center">
+        <p class="eyebrow">Rangkaian Acara</p>
+        <h2>Hari yang kami nantikan</h2>
+        <div class="event-grid">
+          <article class="event-card">
+            <span class="event-icon">✦</span>
+            <h3 id="ceremonyTitle">Akad Nikah</h3>
+            <p><strong data-date>12 Juli 2028</strong></p>
+            <p id="ceremonyTime">08.00 WIB — selesai</p>
+            <p data-venue>Kemang<br>Bogor, Jawa Barat</p>
+          </article>
+          <article class="event-card">
+            <span class="event-icon">❦</span>
+            <h3 id="receptionTitle">Resepsi</h3>
+            <p><strong data-date>12 Juli 2028</strong></p>
+            <p id="receptionTime">Akan diinformasikan</p>
+            <p data-venue>Kemang<br>Bogor, Jawa Barat</p>
+          </article>
+        </div>
+        <div class="actions">
+          <a class="btn primary" id="mapsBtn" href="https://maps.google.com" target="_blank" rel="noopener">Buka Google Maps</a>
+          <button class="btn ghost" id="calendarBtn">Tambah ke Kalender</button>
         </div>
       </div>
     </section>
 
     <section class="section soft">
-      <div class="container narrow center">
+      <div class="container center">
         <p class="eyebrow">Galeri</p>
-        <h2>Momen Kami</h2>
-        <div class="gallery-grid">
-          <div class="gallery-placeholder">Foto 1</div>
-          <div class="gallery-placeholder tall">Foto 2</div>
-          <div class="gallery-placeholder">Foto 3</div>
+        <h2>Sepenggal cerita kami</h2>
+        <div class="gallery">
+          <div class="photo placeholder">Foto 1</div>
+          <div class="photo placeholder">Foto 2</div>
+          <div class="photo placeholder">Foto 3</div>
+          <div class="photo placeholder">Foto 4</div>
+          <div class="photo placeholder">Foto 5</div>
+          <div class="photo placeholder">Foto 6</div>
         </div>
-        <p class="muted small-text">Foto dapat ditambahkan nanti tanpa mengubah struktur halaman.</p>
       </div>
     </section>
 
@@ -96,7 +115,7 @@
         <p class="lead small">Mohon bantu kami mempersiapkan acara dengan mengisi konfirmasi berikut.</p>
         <form id="rsvpForm" class="rsvp-form" name="rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="rsvp" />
-          <p class="hidden" style="display:none"><label>Jangan isi ini: <input name="bot-field" /></label></p>
+          <p style="display:none"><label>Jangan isi ini: <input name="bot-field" /></label></p>
           <input id="name" name="name" type="text" placeholder="Nama" required />
           <select id="attendance" name="attendance" required>
             <option value="">Konfirmasi kehadiran</option>
@@ -116,10 +135,12 @@
         <p class="eyebrow light">Terima Kasih</p>
         <h2 data-couple>Aldi & Imelda</h2>
         <p>Merupakan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.</p>
-        <button id="shareBtn" class="btn light" type="button">Bagikan via WhatsApp</button>
+        <button class="btn light-btn" id="shareBtn">Bagikan via WhatsApp</button>
       </div>
     </section>
   </main>
+
+  <button class="music-btn" id="musicBtn" aria-label="Putar atau hentikan musik">♫</button>
 
   <script src="config.js"></script>
   <script src="script.js"></script>
