@@ -37,69 +37,96 @@ const params = new URLSearchParams(window.location.search);
 const guest = params.get('to');
 if (guest) {
   guestName.textContent = guest;
-  const nameInput = $('name');
-  if (nameInput) nameInput.value = guest;
+  if ($('name')) $('name').value = guest;
 }
 
 let audioCtx = null;
+let masterGain = null;
 let musicTimer = null;
 let isMusicPlaying = false;
-const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 349.23, 440.00, 587.33, 440.00, 349.23];
-let melodyStep = 0;
+let step = 0;
 
-function playTone(freq, when, duration = 1.8) {
+const progression = [
+  [261.63, 329.63, 392.00],
+  [220.00, 261.63, 329.63],
+  [174.61, 220.00, 261.63],
+  [196.00, 246.94, 293.66]
+];
+const melody = [523.25, 493.88, 440.00, 392.00, 440.00, 493.88, 523.25, 659.25, 587.33, 523.25, 493.88, 440.00, 392.00, 329.63, 392.00, 440.00];
+
+function ensureAudio() {
+  if (audioCtx) return;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) throw new Error('AudioContext tidak didukung');
+  audioCtx = new AudioContextClass();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.24;
+  masterGain.connect(audioCtx.destination);
+}
+
+function tone(freq, start, duration, volume = 0.18, type = 'sine') {
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   const filter = audioCtx.createBiquadFilter();
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(freq, when);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, start);
   filter.type = 'lowpass';
-  filter.frequency.setValueAtTime(1600, when);
-  gain.gain.setValueAtTime(0.0001, when);
-  gain.gain.exponentialRampToValueAtTime(0.055, when + 0.12);
-  gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
-  osc.connect(filter).connect(gain).connect(audioCtx.destination);
-  osc.start(when);
-  osc.stop(when + duration + 0.05);
+  filter.frequency.setValueAtTime(1800, start);
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(volume, start + 0.08);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+  osc.connect(filter).connect(gain).connect(masterGain);
+  osc.start(start);
+  osc.stop(start + duration + 0.05);
 }
 
-function scheduleMusic() {
+function schedulePhrase() {
   if (!isMusicPlaying || !audioCtx) return;
-  const now = audioCtx.currentTime + 0.04;
-  const root = melody[melodyStep % melody.length];
-  playTone(root, now, 2.1);
-  playTone(root / 2, now, 2.6);
-  if (melodyStep % 3 === 0) playTone(root * 1.5, now + 0.42, 1.5);
-  melodyStep += 1;
+  const now = audioCtx.currentTime + 0.05;
+  const chord = progression[Math.floor(step / 4) % progression.length];
+  chord.forEach((freq, i) => tone(freq, now + i * 0.12, 2.3, 0.12, i === 0 ? 'triangle' : 'sine'));
+  tone(chord[0] / 2, now, 2.7, 0.16, 'sine');
+  tone(melody[step % melody.length], now + 0.18, 1.3, 0.22, 'sine');
+  if (step % 2 === 1) tone(melody[(step + 2) % melody.length], now + 0.85, 0.95, 0.13, 'triangle');
+  step += 1;
 }
 
 async function startMusic() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') await audioCtx.resume();
+  ensureAudio();
+  if (audioCtx.state !== 'running') await audioCtx.resume();
   if (isMusicPlaying) return;
   isMusicPlaying = true;
   musicBtn.classList.add('playing');
-  scheduleMusic();
-  musicTimer = setInterval(scheduleMusic, 1850);
+  musicBtn.textContent = '♫';
+  schedulePhrase();
+  musicTimer = setInterval(schedulePhrase, 1500);
 }
 
 function stopMusic() {
   isMusicPlaying = false;
   musicBtn.classList.remove('playing');
+  musicBtn.textContent = '♪';
   if (musicTimer) clearInterval(musicTimer);
   musicTimer = null;
+  if (masterGain && audioCtx) {
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.05);
+    setTimeout(() => { if (masterGain && audioCtx) masterGain.gain.value = 0.24; }, 250);
+  }
 }
 
 openInvitation.addEventListener('click', async () => {
   cover.style.display = 'none';
   mainContent.classList.remove('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  try { await startMusic(); } catch (_) {}
+  try { await startMusic(); } catch (err) { console.warn('Musik tidak dapat dimulai:', err); }
 });
 
 musicBtn.addEventListener('click', async () => {
   if (isMusicPlaying) stopMusic();
-  else { try { await startMusic(); } catch (_) {} }
+  else {
+    try { await startMusic(); } catch (err) { console.warn('Musik tidak dapat dimulai:', err); }
+  }
 });
 
 function updateCountdown() {
